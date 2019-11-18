@@ -124,7 +124,8 @@ export default {
     getGithubCommitStatus() {
       this.$axios
         .get(
-          'https://api.github.com/repos/xypecho/vue-full-stack-project/commits'
+            'https://api.github.com/repos/xiaoxcx/vue_project/commits'
+        //   'https://api.github.com/repos/xypecho/vue-full-stack-project/commits'
         )
         .then(res => {
           this.githubCommitStatus = res.data;
