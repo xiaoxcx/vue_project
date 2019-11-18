@@ -189,7 +189,7 @@ export default {
     actionUrl() {
       return process.env.NODE_ENV === 'development'
         ? `http://localhost:8081/api/upload/image?uid=${this.user.uid}`
-        : `http://106.53.78.195:8081/api/upload/image?uid=${this.user.uid}`;
+        : `http://localhost:8081/api/upload/image?uid=${this.user.uid}`;
     },
     getUserInfo() {
       this.loading = true;

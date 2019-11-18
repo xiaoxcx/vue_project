@@ -12,7 +12,8 @@ db = mysql.createPool({
     host: 'localhost',
     post: '3306',
     user: 'root',
-    password: tool.env() === 'production' ? '' : '', // 'bu-gao-su-ni'是你线上数据库的密码，部署时记得修改
+    password:'',
+    // password: tool.env() === 'production' ? '' : '', // 'bu-gao-su-ni'是你线上数据库的密码，部署时记得修改
     database: 'test'
 });
 

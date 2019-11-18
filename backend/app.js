@@ -66,7 +66,7 @@ app.use(cors({
     //         return "*"; // 允许来自所有域名请求
     //     } else {
     //         if (tool.env() === 'production') {
-    //             return 'http://106.53.78.195';
+    //             return 'http://localhost';
     //         } else {
     //             return 'http://localhost:8080'; // 这样就能只允许 http:/ / localhost: 8080 这个域名的请求了   
     //         }

@@ -26,6 +26,7 @@ module.exports = {
     },
     // 判断是生产环境还是开发环境
     env: () => {
-        return process.env.NODE_ENV || 'production'; 
+        // return process.env.NODE_ENV || 'production'; 
+        return 'development';
     }
 }

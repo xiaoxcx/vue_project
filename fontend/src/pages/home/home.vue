@@ -86,6 +86,7 @@
                     <toDoList></toDoList>
                 </div>
             </div>
+            <BoxCard />
         </div>
     </div>
 </template>
@@ -94,7 +95,7 @@ import { mapGetters } from 'vuex';
 import { formatterTime } from '@/tools/index';
 import baseAreaCharts from '@/components/echarts/basicAreaChart';
 import toDoList from '@/components/toDoList/toDoList';
-
+import BoxCard from './BoxCard'
 export default {
   created() {
     this.getHitokoto();
@@ -169,7 +170,8 @@ export default {
   },
   components: {
     baseAreaCharts,
-    toDoList
+    toDoList,
+    BoxCard
   }
 };
 </script>
