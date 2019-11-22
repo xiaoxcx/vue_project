@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta base=/vue/> <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link rel="shortcut icon" href="/static/favicon.ico" type="image/x-icon">
+  <title>后台管理系统</title>
+  <style type="text/css">
+    #Loading-wrapper {
+      width: 100%;
+      background-color: #fff;
+      z-index: 50;
+    }
+
+    #Loading {
+      top: 50%;
+      left: 50%;
+      position: absolute;
+      transform: translateY(-50%) translateX(-50%);
+      z-index: 100;
+    }
+
+    @keyframes ball-beat {
+      50% {
+        opacity: 0.2;
+        transform: scale(0.75);
+      }
+
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .ball-beat>div {
+      background-color: #409EFF;
+      width: 15px;
+      height: 15px;
+      border-radius: 100% !important;
+      margin: 2px;
+      animation-fill-mode: both;
+      display: inline-block;
+      animation: ball-beat 1s 0s infinite linear;
+    }
+
+    .ball-beat>div:nth-child(2n-1) {
+      animation-delay: 0.35s !important;
+    }
+
+    /*以下是重写的element的样式*/
+    .el-steps .el-step__title {
+      font-size: 14px !important;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="Loading-wrapper">
+    <div id="Loading">
+      <div class="loader-inner ball-beat">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+  </div>
+  <div id="app"></div>
+  <!-- built files will be auto injected -->
+</body>
+
+</html>
