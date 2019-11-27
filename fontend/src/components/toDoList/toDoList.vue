@@ -12,10 +12,18 @@
                 <el-button style="float: right; padding: 3px 0" type="text" @click='addTodoList'>新增</el-button>
             </div>
             <div v-for="(val,key) in todoList" :key="key" class="text item">
-                <input type="checkbox" name="" id="" v-model="val.checked">
+                <input type="checkbox" name="" id="" v-model="val.checked" @click="checked(key)">
                 <img v-if="val.checked" src="~@/assets/images/checked.svg" alt="" height="40">
                 <img v-else src="~@/assets/images/unchecked.svg" alt="" height="40">
-                <label :class="{ isComplete:val.checked }" @dblclick="editing = true">{{ val.name }}</label>
+                <label :class="{ isComplete:val.checked }" v-show="val.editing==1?true:false" >{{ val.name }}</label>
+                <el-input 
+                    :class="{ isComplete:val.checked }" 
+                    v-show="!val.editing==1?true:false" 
+                    v-model="val.name"       
+                    @keyup.enter="doneEdit(key)"
+                    @keyup.esc="cancelEdit(key)"
+                    @blur="doneEdit(key)">
+                </el-input>
                 <!-- delete-icon删除图标和修改图标class都是一样 -->
                 <span class="el-icon-check delete-icon" @click='checkThisTodoList(key)'></span>
                 <span class="el-icon-close delete-icon" @click='deleteThisTodoList(key)'></span>
@@ -41,7 +49,7 @@ export default {
   data() {
     return {
       todoList: [
-        { name: '', checked: true },
+        { name: '', checked: '' ,editing:''},
         // { name: '将该项目成功部署到服务器', checked: true },
         // { name: '学会Node', checked: true },
         // {
@@ -54,7 +62,8 @@ export default {
         // { name: '我无敌', checked: false },
 
       ],
-      newToDoList: ''
+      newToDoList: '',
+      editing:true
     };
   },
   mounted(){
@@ -67,6 +76,7 @@ export default {
       this.$axios
         .get('/api/user/todoList')
         .then(res => {
+          // console.log(res.data);
           this.todoList=res.data;
           console.log(this.todoList);
         })
@@ -77,10 +87,15 @@ export default {
 
     addTodoList() {
       // console.log(this.newToDoList);
+      // 增加时间节点，用于修改name时，能够根据时间不同进行判别
+      let datatime = new Date().getTime();
+      // datatime=new Date()
+      // console.log(datatime)
       this.$axios
         .post('/api/user/addtodoList', {
           name: this.newToDoList,
-          checked:true
+          datatime:datatime,
+          checked:0
         })
         .then(res => {
           // console.log("增加的res："+res.data.status)
@@ -112,7 +127,7 @@ export default {
     },
 
     deleteThisTodoList(key) {
-      console.log("key:"+key);
+      // console.log("key:"+key);
       this.$axios
         .post('/api/user/deletetodoList', {
           key:key,
@@ -133,17 +148,50 @@ export default {
         });
         // this.inittodoList();
     },
-
+    checked(key){
+      console.log(this.todoList[key].checked)
+      this.$axios
+        .post('/api/user/checked', {
+          key:key,
+          checked:checked,
+          name:this.todoList[key].name,
+          datatime:this.todoList[key].datatime
+        })
+        .then(res => {    
+          console.log("我准备修改"+res.data)   
+          // console.log(this.todoList[key]);
+          this.inittodoList();
+          this.$tips({
+                  message: res.data.message,
+                  type: ''
+            });
+          // console.log("key:"+key);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+      },
+    },
     checkThisTodoList(key) {
-      console.log("key:"+key);
+      // console.log("key:"+key);
+      // 把要编辑的内容显示为input，并把相关name直接传入到input中
+      this.todoList[key].editing=0;
+      // console.log(this.todoList[key].datatime)
+    },
+    doneEdit(key) {
+      this.todoList[key].editing=1;
+      // console.log(this.todoList[key].name)
       this.$axios
         .post('/api/user/checktodoList', {
           key:key,
-          list:this.todoList[key]
+          name:this.todoList[key].name,
+          datatime:this.todoList[key].datatime
         })
         .then(res => {      
           // console.log("res:"+res) 
           // this.todoList.splice(key, 1);  
+          
+          console.log("我准备修改"+this.todoList[key]);
           this.inittodoList();
           this.$tips({
                   message: res.data.message,
@@ -156,12 +204,11 @@ export default {
         });
         // this.inittodoList();
     },
-    
     // deleteThisTodoList(key) {
     //   this.todoList.splice(key, 1);
     //   console.log("key:"+key)
     // }
-  },
+  
  
 };
 </script>

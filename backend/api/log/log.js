@@ -29,7 +29,11 @@ class log {
             ['/api/user/userInfo', [status === 200 ? `${record.user.username}查看了自己的资料` : `${record.user.username}想查看自己的资料未遂`]],
             ['/api/upload/getFilesList', [status === 200 ? `${record.user.username}选择以每页展示${pageSize}条数据，查看了第${currentPage}页的文件列表` : `${record.user.username}查看文件列表未遂`]],
             ['/api/upload/deleteFiles', [status === 200 ? `${record.user.username}删除了id为${record.request.data.id}的文件` : `${record.user.username}尝试删除id为${record.request.data.id}的文件未遂`]]
+            ['/api/user/todoList', [status === 200 ? `${record.user.username}初始化了todoList` : `${record.user.username}初始化todoList失败`]]
+            ['/api/api/user/addtodoList', [status === 200 ? `${record.user.username}增加了todoList为${record.request.data[data.length-1].name}` : `${record.user.username}增加了todoList失败`]]
+            ['/api/api/user/deletetodoList', [status === 200 ? `${record.user.username}删除了todoList中的${record.request.data[key].name}` : `${record.user.username}删除todoList失败`]]
         ])
+
         if (operationDescription.get(url) && operationDescription.get(url)[0]) {
             // console.log(operationDescription.get(url)[0]);
             // console.log('======================================================');
@@ -42,8 +46,8 @@ class log {
     }
     async operationLogList(ctx) {
         let res;
-        let currentPage = ctx.request.body.currentPage;//当前是第几页
-        let pageSize = ctx.request.body.pageSize;//每页显示多少条
+        let currentPage = ctx.request.body.currentPage;  //当前是第几页
+        let pageSize = ctx.request.body.pageSize;        //每页显示多少条
         let logList = await mysqlJs.queryFromMysql(`SELECT * FROM log ORDER BY id DESC LIMIT ${(currentPage - 1) * pageSize}, ${pageSize}`);
         let total = JSON.parse(JSON.stringify(await mysqlJs.queryFromMysql(`SELECT COUNT(*) FROM log`)));
         if (logList && logList.length > 0) {

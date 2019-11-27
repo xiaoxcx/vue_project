@@ -86,9 +86,18 @@ router.beforeEach((to, from, next) => {
 
 /* 添加请求拦截器 */
 const record = {};// 用来存储请求和响应的信息
-const filterUrl = [`${process.env.BASE_URL}/api/log/insertOperationLog`, `${process.env.BASE_URL}/api/user/userLoginCount`, `${process.env.BASE_URL}/api/spider/hitokoto`, 'https://api.github.com/repos/xypecho/vue-full-stack-project/commits', `${process.env.BASE_URL}/api/user/md5Password`, `${process.env.BASE_URL}/api/user/userInfo`]; // 不需要拦截的请求的url
+const filterUrl = 
+[`${process.env.BASE_URL}/api/log/insertOperationLog`, 
+`${process.env.BASE_URL}/api/user/userLoginCount`, 
+`${process.env.BASE_URL}/api/spider/hitokoto`, 
+'https://api.github.com/repos/xiaoxcx/vue_project/commits', 
+`${process.env.BASE_URL}/api/user/md5Password`, 
+`${process.env.BASE_URL}/api/user/userInfo`]; // 不需要拦截的请求的url
 axios.interceptors.request.use(
   config => {
+    // console.log("过滤了")
+    // console.log(config.baseURL)
+    // console.log(config.url)
     if (filterUrl.indexOf(`${config.baseURL}${config.url}`) === -1 && filterUrl.indexOf(`${config.url}`) === -1) {
       // console.log(config);
       const { data, url } = config;
@@ -103,8 +112,9 @@ axios.interceptors.request.use(
 /* 添加响应拦截器,先注释，响应太快，基本看不到loading效果... */
 axios.interceptors.response.use(
   response => {
+    // url.indexOf()可返回某个指定字符串值在字符串中首次出现的位置，如果要检索的字符串值没有出现，则该方法返回 -1
     if (filterUrl.indexOf(response.config.url) === -1) {
-      // console.log(response);
+      console.log(response);
       const { data, status } = response;
       const { uid, username } = store.getters.user;
       record.response = { data, status };

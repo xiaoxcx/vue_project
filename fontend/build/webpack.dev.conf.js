@@ -12,6 +12,9 @@ const portfinder = require('portfinder')
 
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
+// 配置webpack-bundle-analyzer
+var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
 
 const devWebpackConfig = merge(baseWebpackConfig, {
   module: {
@@ -57,6 +60,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       template: 'index.html',
       inject: true
     }),
+    new BundleAnalyzerPlugin(),
     // copy custom static assets
     new CopyWebpackPlugin([
       {

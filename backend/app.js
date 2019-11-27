@@ -28,6 +28,8 @@ if (!fs.existsSync('upload')) {
     fs.mkdirSync('upload/images');
     fs.mkdirSync('upload/files');
 }
+
+
 // 上传头像的相关配置
 var storage = multer.diskStorage({
     //文件保存路径
@@ -36,9 +38,13 @@ var storage = multer.diskStorage({
     },
     //修改文件名称
     filename: function (req, file, cb) {
-        var fileFormat = (file.originalname).split(".");
-        cb(null, Date.now() + "." + fileFormat[fileFormat.length - 1]);
+        var fileFormat = (file.originalname).split(".");////以点分割成数组，数组的最后一项就是后缀名
+        // console.log(fileFormat)  打印文件分隔后的数组结果，例如：[ 'yun', 'png' ]
+        // console.log(fileFormat[fileFormat.length - 1])      打印文件分隔后的数组最后一项，其实就得到了后缀名
+        cb(null, Date.now() + "." + fileFormat[fileFormat.length - 1]);  //将后缀名和前时间结合，生成新的文件到服务器中
+        // console.log(Date.now())
     }
+    
 })
 var uploadMiddleware = multer({ storage: storage });
 
@@ -87,6 +93,9 @@ router
     .get('/api/user/todoList', user.todoList)
     .post('/api/user/addtodoList', user.addtodoList)
     .post('/api/user/deletetodoList', user.deletetodoList)
+    .post('/api/user/checktodoList',user.checktodoList)
+    .post('/api/user/checked',user.checked)
+
     .post('/api/user/login', user.login)
     .post('/api/user/register', user.register)
     .post('/api/user/list', user.list)

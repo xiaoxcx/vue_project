@@ -8,11 +8,22 @@ const mysql = require('mysql');
 const tool = require('./tool.js');
 
 
+
+// var connection = mysql.createConnection({
+//     host: 'rm-m5e4908wi7o4nmw2tno.mysql.rds.aliyuncs.com',
+//     user: 'root',
+//     password: 'lgn970722!',
+//     port: '3306',
+//     database: 'equ_master',
+//     timezone: '08:00'
+//   });
+
+
 db = mysql.createPool({
-    host: 'localhost',
+    host: 'rm-m5e4908wi7o4nmw2tno.mysql.rds.aliyuncs.com',
     post: '3306',
     user: 'root',
-    password:'',
+    password:'lgn970722!',
     // password: tool.env() === 'production' ? '' : '', // 'bu-gao-su-ni'是你线上数据库的密码，部署时记得修改
     database: 'test'
 });
