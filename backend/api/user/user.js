@@ -72,40 +72,6 @@ class user {
             return ctx.body = res;
         }
     }
-        // deletetodoList
-    async checked(ctx) {
-        let res;
-        // console.log(ctx)
-        let key = ctx.request.body.key;
-        let name = ctx.request.body.name;
-        let datatime = ctx.request.body.datatime;
-        let checked = ctx.request.body.checked;
-        
-        // console.log(key)
-        // console.log(name)
-        // console.log(datatime)
-        console.log(checked);
-
-        if(checked==false ||checked ==0){
-            checked =1;
-        }else{
-            checked =0;
-        }
-        
-        // 刪除操作，name肯定存在，故不用做if判断
-        // let selList = await mysqlJs.queryFromMysql(`slect name from todoList where name = '${name}' `);
-        let todoList = await mysqlJs.queryFromMysql(`update todoList set checked = '${checked}' where datatime ='${datatime}' `);
-        console.log(todoList)
-        res = {
-            status: 200,
-            name: name,
-            datatime:datatime,
-            // checked: true,
-            message:"修改成功"
-        }
-
-        return ctx.body = res;
-    }
     // deletetodoList
     async checktodoList(ctx) {
         let res;
@@ -144,7 +110,7 @@ class user {
         res = {
             status: 200,
             name: name,
-            // checked: true,
+            checked: 1,
             message:"删除成功"
         }
 

@@ -94,8 +94,6 @@ router
     .post('/api/user/addtodoList', user.addtodoList)
     .post('/api/user/deletetodoList', user.deletetodoList)
     .post('/api/user/checktodoList',user.checktodoList)
-    .post('/api/user/checked',user.checked)
-
     .post('/api/user/login', user.login)
     .post('/api/user/register', user.register)
     .post('/api/user/list', user.list)

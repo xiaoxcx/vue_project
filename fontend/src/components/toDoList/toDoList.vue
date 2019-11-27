@@ -12,7 +12,7 @@
                 <el-button style="float: right; padding: 3px 0" type="text" @click='addTodoList'>新增</el-button>
             </div>
             <div v-for="(val,key) in todoList" :key="key" class="text item">
-                <input type="checkbox" name="" id="" v-model="val.checked" @click="checked(key)">
+                <input type="checkbox" name="" id="" v-model="val.checked">
                 <img v-if="val.checked" src="~@/assets/images/checked.svg" alt="" height="40">
                 <img v-else src="~@/assets/images/unchecked.svg" alt="" height="40">
                 <label :class="{ isComplete:val.checked }" v-show="val.editing==1?true:false" >{{ val.name }}</label>
@@ -49,7 +49,7 @@ export default {
   data() {
     return {
       todoList: [
-        { name: '', checked: '' ,editing:''},
+        { name: '', checked: 0 ,editing:''},
         // { name: '将该项目成功部署到服务器', checked: true },
         // { name: '学会Node', checked: true },
         // {
@@ -148,30 +148,7 @@ export default {
         });
         // this.inittodoList();
     },
-    checked(key){
-      console.log(this.todoList[key].checked)
-      this.$axios
-        .post('/api/user/checked', {
-          key:key,
-          checked:checked,
-          name:this.todoList[key].name,
-          datatime:this.todoList[key].datatime
-        })
-        .then(res => {    
-          console.log("我准备修改"+res.data)   
-          // console.log(this.todoList[key]);
-          this.inittodoList();
-          this.$tips({
-                  message: res.data.message,
-                  type: ''
-            });
-          // console.log("key:"+key);
-        })
-        .catch(err => {
-          console.log(err);
-        });
-      },
-    },
+
     checkThisTodoList(key) {
       // console.log("key:"+key);
       // 把要编辑的内容显示为input，并把相关name直接传入到input中
@@ -208,7 +185,7 @@ export default {
     //   this.todoList.splice(key, 1);
     //   console.log("key:"+key)
     // }
-  
+  },
  
 };
 </script>
