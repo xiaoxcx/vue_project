@@ -17,7 +17,7 @@
     "echarts": "^4.2.0-rc.1",
     "element-ui": "^2.4.6",
     "lodash": "^4.17.11",
-    "node-sass": "^4.13.0",
+    "node-sass": "^4.13.1",
     "sass-loader": "^7.3.1",
     "v-charts": "^1.17.10",
     "vue": "^2.5.2",
